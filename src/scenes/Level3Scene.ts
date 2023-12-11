@@ -11,7 +11,6 @@ export default class Level3Scene extends Phaser.Scene {
   private player: Player;
   private bullets: Phaser.GameObjects.Group;
   private enemies: Phaser.GameObjects.Group;
-  private objects: Phaser.GameObjects.Group;
   private score: number;
   private lives: number;
   private emitter: Phaser.Events.EventEmitter;
@@ -88,7 +87,7 @@ export default class Level3Scene extends Phaser.Scene {
 
 
     });
-    this.physics.add.overlap(this.player, this.enemies, (player, enemy) => {
+    this.physics.add.overlap(this.player, this.enemies, () => {
       if (this.canCollide) {
         this.canCollide = false;
         this.lives--;

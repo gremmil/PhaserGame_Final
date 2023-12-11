@@ -6,12 +6,9 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
   private speed: number;
   private isFiring: boolean;
   private bullets: Phaser.GameObjects.Group;
-  private shootSound: Phaser.Sound.BaseSound;
   private directionBullet: MoveDirectionI = { x: 0, y: 0 };
   private moveDirectionPlayer: { x: boolean, y: boolean } = { x: false, y: false };
   private jumpForce: number;
-  private canDoubleJump: boolean;
-  private canTripleJump: boolean;
 
   constructor(scene: Phaser.Scene, x: number, y: number, textureKey: string) {
     super(scene, x, y, textureKey);
@@ -30,14 +27,9 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     this.scene.load.audio('shootSound', 'assets/sounds/player/shoot.wav');
   }
   create() {
-    this.shootSound = this.scene.sound.add('shootSound');
   }
   protected preUpdate(time: number, delta: number): void {
     super.preUpdate(time, delta);
-    if (this.body.blocked.down) {
-      this.canDoubleJump = true;
-      this.canTripleJump = true;
-    }
     this.handleInput();
     this.handleFiring();
   }

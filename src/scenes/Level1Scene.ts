@@ -4,14 +4,12 @@ import Player from '../objects/Player';
 import Enemy from '../objects/Enemy';
 import Bullet from '../objects/Bullet';
 import Popup from '../shared/Popup';
-import { game } from '../main';
 
 export default class Level1Scene extends Phaser.Scene {
   public background: Phaser.GameObjects.TileSprite;
   private player: Player;
   private bullets: Phaser.GameObjects.Group;
   private enemies: Phaser.GameObjects.Group;
-  private objects: Phaser.GameObjects.Group;
   private score: number;
   private lives: number;
   private emitter: Phaser.Events.EventEmitter;
@@ -90,7 +88,7 @@ export default class Level1Scene extends Phaser.Scene {
 
 
     });
-    this.physics.add.overlap(this.player, this.enemies, (player, enemy) => {
+    this.physics.add.overlap(this.player, this.enemies, () => {
       if (this.canCollide) {
         this.canCollide = false;
         this.lives--;
@@ -124,17 +122,6 @@ export default class Level1Scene extends Phaser.Scene {
       enemy.setMoveDirection({ x: Phaser.Math.RND.pick([1, -1]), y: 0 })
       enemy.setScale(2);
       this.enemies.add(enemy);
-    }
-  }
-
-  private createScoreObjects() {
-    // Crear objetos para el score en posiciones aleatorias
-    const numObjects = 10;
-    for (let i = 0; i < numObjects; i++) {
-      const x = Phaser.Math.Between(50, this.scale.width - 50);
-      const y = Phaser.Math.Between(50, this.scale.height - 200);
-      const object = this.add.circle(x, y, 10, 0xff0000);
-      this.objects.add(object);
     }
   }
 }
